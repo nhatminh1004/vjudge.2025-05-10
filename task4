@@ -1,0 +1,35 @@
+#include<bits/stdc++.h>
+using namespace std;
+string change(int x,int y,string s){
+    string New=s;
+    char tmp=s[x];
+    New[x]=New[y];
+    New[y]=tmp;
+    sort(New.begin()+x+1,New.end());
+    return New;
+}
+int main(){
+    string s;
+    while(cin>>s&&s!="#"){
+        int vt=-1;
+        for(int i=s.length()-1;i>0;i--){
+            if(s[i]>s[i-1]){
+                vt=i-1;
+                break;
+            }
+        }
+        if(vt==-1)cout<<"No Successor"<<endl;
+        else {
+            int b=-1;
+            char Min_big=CHAR_MAX;
+            for(int i=s.length()-1;i>vt;i--){
+                if(s[i]>s[vt]&&s[i]<Min_big){
+                    Min_big=s[i];
+                    b=i;
+                }
+            }
+            cout<<change(vt,b,s)<<endl;
+        }
+    }
+    return 0;
+}
