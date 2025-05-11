@@ -1,0 +1,34 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main(){
+    int n;
+    cin>>n;
+    cin.ignore();
+    while(n--){
+        cin.ignore();
+        vector<int>vt;
+        vector<string>gt;
+
+        string s;
+        getline(cin,s);
+        stringstream sin(s);
+        int x;
+        while(sin>>x){
+            vt.push_back(x);
+        }
+
+        getline(cin,s);
+        sin.clear();
+        sin.str(s);
+        string value;
+        gt.resize(vt.size()+1);
+        for(int i=0;sin>>value;++i){
+            gt[vt[i]]=value;
+        }
+        for(int i=1;i<gt.size();i++){
+            cout<<gt[i]<<endl;
+        }
+        if(n>0) cout<<endl;
+    }
+    return 0;
+}
