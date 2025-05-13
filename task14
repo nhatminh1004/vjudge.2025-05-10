@@ -7,37 +7,44 @@ int compare(char c){
 }
 using namespace std;
 int main(){
+//    freopen("hihi.inp","r",stdin);
+//    freopen("hihi.out","w",stdout);
     int n;
     cin>>n;
     cin.ignore();
+    string thu;// in ra dòng trống sau n để tránh đọc nhầm
+    getline(cin,thu);
     while(n--){
         string s;
-        getline(cin,s);
         stack<char>st;
+        string a;
+        while(getline(cin,a)&& a!=""){
+            s=s+a[0];
+        }
         for(char c:s){
-            if('0'<=c&&c<='9')cout<<c;
-            else if(c=='(')st.push(c);
-                else if(c==')'){
+            if('0'<=c&&c<='9')cout<<c; // nếu là số thì cout
+            else if(c=='(')st.push(c); //đẩy ( vào stack
+                else if(c==')'){       //nếu là ) thì cout hết stack cho đến khi gặp )
                     while( !st.empty()&&st.top()!='('){
                         cout<<st.top();
                         st.pop();
                     }
-                    if( !st.empty())st.pop();//xoa (
+                    if( !st.empty())st.pop();//xoa ( ra khỏi stack
                 }
                     else{
-                        while(!st.empty()&&( compare(st.top())>=compare(c))){
+                        while(!st.empty()&&( compare(st.top())>=compare(c))){ // xét độ ưu tiên
                             cout<<st.top();
                             st.pop();
                         }
                         st.push(c);
                     }
         }
-        while( !st.empty()){
+        while( !st.empty()){ //xét phần tử còn lại
             cout<<st.top();
             st.pop();
         }
         cout<<endl;
+        if(n>0) cout<<endl;
     }
-
     return 0;
 }
