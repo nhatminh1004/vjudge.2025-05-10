@@ -1,0 +1,75 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void solve(){
+
+    int n, t, m;
+    cin >> n >> t >> m;
+
+    queue<pair<int,int>>l, r;
+    vector<int>res( m + 1 );
+
+    for(int i = 1; i <= m; i++){
+        string s;
+        int tg;
+        cin >> tg >> s;
+        if(s == "left") l.push({i,tg});
+        else r.push({i,tg});
+    }
+
+    bool trai = true;
+    int time = 0;
+
+    while( !l.empty() || !r.empty()){
+        int ms = INT_MAX; // tgian bat dau
+        ms = min( l.front().second , ms );
+        ms = min( r.front().second , ms );
+        time = max( time , ms );
+
+        vector<pair<int,int>>pha;
+        // khi dang o ben left;
+        if(trai){
+            while( !l.empty() && l.front().second <= time && pha.size() < n ){
+                pha.push_back(l.front());
+                l.pop();
+            }
+        }
+        else{
+            while( !r.empty() && r.front().second <= time && pha.size() < n ){
+                pha.push_back(r.front());
+                r.pop();
+            }
+        }
+        // pha k trong thi cong thoi thgian
+        if( !pha.empty()){
+            for( auto xe : pha){
+                res[xe.first] = time + t;
+                time += t;
+                trai = !trai;
+            }
+        }
+
+        // pha trong thi kiem tra xem cac bo co xe doi hay khong
+        else {
+            bool ok_l = !l.empty() && l.front().second <= time;
+            bool ok_r = !r.empty() && r.front().second <= time;
+
+            if( ok_l || ok_r){
+                time += t;
+                trai = !trai;
+            }
+            else time = ms;
+        }
+    }
+
+    for( int i = 1; i <= m; i++) cout << res[i] << endl;
+}
+signed main(){
+    int c;
+    cin >> c;
+    while( c-- ){
+        solve();
+        if(c > 0) cout << endl;
+    }
+    return 0;
+}
